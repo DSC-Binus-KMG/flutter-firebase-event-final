@@ -27,4 +27,5 @@ Firebase
 
 ## App
 If all goes well it should end up like this:
+<br>
 ![](docs/result.gif)
