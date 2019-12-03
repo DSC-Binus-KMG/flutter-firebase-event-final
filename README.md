@@ -1,16 +1,30 @@
-# mynewflutterapp
+# Flutter Firebase Event
+A simple Flutter app for DSC Flutter Dev 2019 event, in this app there are implementations of Splash Screens, Firebase Auth and Firebase Firestore.
 
-A new Flutter project.
+## Materials:  
+General
+- Widget
+- Stateless
+- Stateful
+- Future
+- Async / await
 
-## Getting Started
+Layouting
+- Container, Row, Column
+- Text
+- FlatButton/RaisedButton
+- Form
+- ListView.Builder
+- ListTile
 
-This project is a starting point for a Flutter application.
+Actions
+- Snackbar in Flutter (Toast)
+- Navigator (Push/Replacement)
 
-A few resources to get you started if this is your first Flutter project:
+Firebase
+- Firebase Auth (Login, Register)
+- Firebase Store (Get snapshot)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## App
+If all goes well it should end up like this:
+![](docs/result.gif)

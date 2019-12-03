@@ -1,70 +1,58 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget{
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
-  String _name = "";
-  Widget build(BuildContext context){
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: new Text('Home'),
       ),
-      body: Builder(
-        builder: (context)=>Form(
-          key: _key,
-          child: Center(
-            child: Container(
-              width: 200.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Put your name here!',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    onSaved: (val){
-                      _name = val;
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: Column(children: <Widget>[
+            new Container(
+              padding: EdgeInsets.all(15.0),
+              child: new Text(
+                'Books',
+                style: TextStyle(
+                  fontSize: 20.0,
+                ),
+              ),
+            ),
+            new Expanded(
+              child: StreamBuilder(
+                stream: Firestore.instance.collection('books').snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData)
+                    return new Center(child: new CircularProgressIndicator());
+                  return ListView.separated(
+                    itemCount: snapshot.data.documents.length,
+                    itemBuilder: (context, index) =>
+                    _buildListItem(context, snapshot.data.documents[index]),
+                    separatorBuilder: (context, index) {
+                      return Divider();
                     },
-                  ),
-                  SizedBox(height: 10.0),
-                  FlatButton(
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    child: Text(
-                      'Save Name',
-                    ),
-                    onPressed: (){
-                      submitForm(context);
-                    },
-                  ),
-                ],
-              )
-            )
-          ),
+                  );
+                },
+              ),
+            ),
+          ]),
         ),
       ),
     );
   }
 
-  Widget _a(BuildContext context){
-    
-  }
-
-  void viewSnackBar(BuildContext context){
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Hello, ' + _name),
+  Widget _buildListItem(BuildContext context, DocumentSnapshot document){
+    return ListTile(
+      title: Text(document['title']),
+      subtitle: Text(document['author']),
+      trailing: Text("Rp "+document['price'].toString()),
+      leading: Container(
+        width: 50.0,
+        child: Image.network(document['image']),
       ),
     );
-  }
-
-  void submitForm(BuildContext context){
-    final formState = _key.currentState;
-    formState.save();
-    viewSnackBar(context);
   }
 }
